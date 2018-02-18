@@ -45,10 +45,15 @@ for (int i = 0; i < ptsx.size(); ++i)
 # Model Predictive Control with Latency
 A delay of 100 ms need to be taken care of after the MPC works. In order to deal with the latency, I set the initial states to be the states after 100 ms. This allows the vehicle to "look ahead" and correct for where it will be in the future instead of where it is currently positioned.
 I considered this latency and the equation is as below.
+
 double latency_x = 0 * v * (100 / 1000);
+
 double latency_y = 0;
+
 double latency_psi = 0;
+
 double cte = polyeval(coeffs, 0) - 0;
+
 double epsi = latency_psi - atan(coeffs[1] + 2 * latency_x * coeffs[2] + 3 * pow(latency_x, 2) * coeffs[3]);
 
 
