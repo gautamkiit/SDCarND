@@ -24,9 +24,14 @@ epsi[t] = psi[t] - psides[t-1] + v[t-1] * delta[t-1] / Lf * dt
 Timestep length (N) is chosen to be 10, and timestep frequency (dt) 0.1.
 Timestep length needs to be small enough to allow for efficient computation, but large enough to make accurate plan further ahead. Values like 4 caused car to be unstable because of too small planning horizon. However, values like 15 caused car to be unstable due too low computation frequency.
 Timestep frequency needs to be small enough to allow accurate computation, but large enough to allow planning further ahead without large computation requirements. Value 0.1 has other nice benefit - it matches 100ms delay that we have for actuators, so it is easy to account for delay.
+
 # Polynomial Fitting and MPC Preprocessing
-The waypoints from simulator are global coordinate system, but we have to transform them because all computations are performed in the vehicle coordinate system. After that, the waypoints are fitted with a 3rd order polynomial.
-for (int i = 0; i < ptsx.size(); ++i) {
+The waypoints from simulator are global coordinate system, but we have to transform them because all computations are performed in the vehicle coordinate system. 
+After that, the waypoints are fitted with a 3rd order polynomial.
+
+for (int i = 0; i < ptsx.size(); ++i) 
+
+{
 
 	// move to origin and rotate around origin to align with axis
 	double shift_x = ptsx[i] - px;
@@ -34,6 +39,7 @@ for (int i = 0; i < ptsx.size(); ++i) {
 
 	ptsx[i] = shift_x * cos(0 - psi) - shift_y * sin(0 - psi);
 	ptsy[i] = shift_x * sin(0 - psi) + shift_y * cos(0 - psi);
+
 } 
 
 # Model Predictive Control with Latency
